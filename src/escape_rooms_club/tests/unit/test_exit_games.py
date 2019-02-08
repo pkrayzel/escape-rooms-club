@@ -2,7 +2,7 @@ from escape_rooms_club.scrapers import exit_games
 
 
 def test_parse_first_exit_game(scraper_input_exitgamescz_ghost_house):
-    converted_result = exit_games.parse_exit_game(scraper_input_exitgamescz_ghost_house)
+    converted_result = exit_games.parse_single_escape_room(scraper_input_exitgamescz_ghost_house)
 
     assert converted_result.name == "Dům duchů"
     assert converted_result.description == "Ten dům byl téměř půl století opuštěný. Všichni se od něj drželi dál, mnozí neměli ani odvahu se podívat do zatažených oken. Stigma, které si nesl, bylo moc..."
@@ -14,7 +14,7 @@ def test_parse_first_exit_game(scraper_input_exitgamescz_ghost_house):
 
 
 def test_test_parse_third_exit_game(scraper_input_exitgamescz_lair_of_vice):#
-    converted_result = exit_games.parse_exit_game(scraper_input_exitgamescz_lair_of_vice)
+    converted_result = exit_games.parse_single_escape_room(scraper_input_exitgamescz_lair_of_vice)
 
     assert converted_result.description == """První úniková hra, která je tak trochu hanbatá, a proto ji doporučujeme také pro DVA!
             Věk: 18+
@@ -31,7 +31,7 @@ def test_test_parse_third_exit_game(scraper_input_exitgamescz_lair_of_vice):#
 
 
 def test_scraping_escape_rooms(scraper_input_exitgamescz_home_page):
-    the_chamber_ghost_house = exit_games.get_escape_rooms(scraper_input_exitgamescz_home_page)[0]
+    the_chamber_ghost_house = exit_games.get_all_escape_rooms(scraper_input_exitgamescz_home_page)[0]
 
     assert the_chamber_ghost_house.name == "Dům duchů"
     assert the_chamber_ghost_house.description == "Ten dům byl téměř půl století opuštěný. Všichni se od něj drželi dál, mnozí neměli ani odvahu se podívat do zatažených oken. Stigma, které si nesl, bylo moc..."

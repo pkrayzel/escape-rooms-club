@@ -1,14 +1,14 @@
 from escape_rooms_club.model import EscapeRoom
 
 
-def get_escape_rooms(scraper_object):
+def get_all_escape_rooms(scraper_object):
     escape_rooms = scraper_object.find_all('div', class_="product")
 
     result = []
 
     for i, item in enumerate(escape_rooms):
         try:
-            room = parse_exit_game(item)
+            room = parse_single_escape_room(item)
             result.append(room)
         except Exception as e:
             print(e)
@@ -16,7 +16,7 @@ def get_escape_rooms(scraper_object):
     return result
 
 
-def parse_exit_game(scraper_object):
+def parse_single_escape_room(scraper_object):
     """
         <div class="product">
             <div class="flags">
