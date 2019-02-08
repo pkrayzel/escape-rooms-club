@@ -1,0 +1,4 @@
+bs4
+
+# tests
+pytest==3.7.3

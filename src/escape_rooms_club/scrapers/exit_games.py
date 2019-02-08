@@ -1,25 +1,8 @@
-import requests
-from bs4 import BeautifulSoup
-import typing
+from escape_rooms_club.model import EscapeRoom
 
 
-class EscapeRoom(typing.NamedTuple):
-    name: str
-    description: str
-    detail_url: str
-    provider: str
-    provider_url: str
-    price_info: str
-    image_url: str
-
-
-def get_escape_rooms():
-    # page = requests.get("https://www.exitgames.cz/Seznam-unikovych-her")
-    # soup = BeautifulSoup(page.content, 'html.parser')
-    content = open("examples/exit_games.htm")
-    soup = BeautifulSoup(content.read(), 'html.parser')
-
-    escape_rooms = soup.find_all('div', class_="product")
+def get_escape_rooms(scraper_object):
+    escape_rooms = scraper_object.find_all('div', class_="product")
 
     result = []
 
@@ -33,12 +16,7 @@ def get_escape_rooms():
     return result
 
 
-def _parse_exit_game_from_html_string(content):
-    soup = BeautifulSoup(content, 'html.parser')
-    return parse_exit_game(soup)
-
-
-def parse_exit_game(soup):
+def parse_exit_game(scraper_object):
     """
         <div class="product">
             <div class="flags">
@@ -69,11 +47,11 @@ def parse_exit_game(soup):
         </div>
     """
 
-    a_name = soup.find("div", class_="name").find("a")
-    a_partner = soup.find("div", class_="partner").find("a")
-    description = soup.find("div", class_="description").get_text()
-    price = soup.find("div", class_="price").find("span", class_="value").get_text()
-    image = soup.find("img")
+    a_name = scraper_object.find("div", class_="name").find("a")
+    a_partner = scraper_object.find("div", class_="partner").find("a")
+    description = scraper_object.find("div", class_="description").get_text()
+    price = scraper_object.find("div", class_="price").find("span", class_="value").get_text()
+    image = scraper_object.find("img")
 
     return EscapeRoom(
         name=a_name.get_text(),

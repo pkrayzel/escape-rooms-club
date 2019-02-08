@@ -1,4 +1,82 @@
-<!DOCTYPE html>
+import pytest
+from bs4 import BeautifulSoup
+
+
+@pytest.fixture
+def scraper_input_exitgamescz_ghost_house():
+    content = """
+    <div class="product">
+        <div class="flags">
+            <div class="flag-featured"><span>TOP</span></div>
+            <div class="rating rating-small rating-5"></div>
+            <div class="difficulty difficulty-small difficulty-3">
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb-empty"></span>
+                <span class="icon-bulb-empty"></span>
+            </div>
+        </div>
+        <div class="image">
+            <a href="https://www.exitgames.cz/praha-the-chamber-dum-duchu" title="Dům duchů">
+                <img alt="Dům duchů" src="https://www.exitgames.cz/image/cache/data/TCR_dum_duchu/dum-duchu-male-3-e1479292532150-280x210crop.jpg"/>
+            </a>
+        </div>
+        <div class="info">
+            <div class="name"><a href="https://www.exitgames.cz/praha-the-chamber-dum-duchu">Dům duchů</a></div>
+            <div class="partner"><a href="https://www.exitgames.cz/seznam-unikovych-her/the-chamber">The Chamber</a></div>
+            <div class="description">Ten dům byl téměř půl století opuštěný. Všichni se od něj drželi dál, mnozí neměli ani odvahu se podívat do zatažených oken. Stigma, které si nesl, bylo moc...</div>
+            <div class="btn-detail">
+                <div class="price">Cena od: <span class="value">1 590 Kč / skupina</span></div>
+                <a class="btn btn-small-filled" href="https://www.exitgames.cz/praha-the-chamber-dum-duchu" title="Dům duchů">zobrazit hru</a>
+            </div>
+        </div>
+    </div>"""
+    return BeautifulSoup(content, 'html.parser')
+
+
+@pytest.fixture
+def scraper_input_exitgamescz_lair_of_vice():
+    content = """
+    <div class="product">
+        <div class="flags">
+            <div class="flag-featured"><span>TOP</span></div>
+            <div class="rating rating-small rating-5"></div>
+            <div class="difficulty difficulty-small difficulty-3">
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb"></span>
+                <span class="icon-bulb-empty"></span>
+                <span class="icon-bulb-empty"></span>
+            </div>
+        </div>
+        <div class="image">
+            <a href="https://www.exitgames.cz/praha-chess-key-room-doupe-neresti" title="Doupě neřesti (hra nejen pro páry)">
+            <img alt="Doupě neřesti (hra nejen pro páry)" src="https://www.exitgames.cz/image/cache/data/Chess_Key_Room/Doupě neřesti_poháry-280x210crop.jpg"/>
+            </a>
+        </div>
+        <div class="info">
+            <div class="name"><a href="https://www.exitgames.cz/praha-chess-key-room-doupe-neresti">Doupě neřesti (hra nejen pro páry)</a></div>
+            <div class="partner"><a href="https://www.exitgames.cz/seznam-unikovych-her/chess-key-room">Chess KEY Room</a></div>
+            <div class="description">První úniková hra, která je tak trochu hanbatá, a proto ji doporučujeme také pro DVA!
+            Věk: 18+
+            Při rezervaci uveďte do poznámky "Doupě neřesti"
+
+
+            Nevinná dívka,...</div>
+            <div class="btn-detail">
+                <div class="price">Cena od: <span class="value">1 100 Kč / skupina</span></div>
+                <a class="btn btn-small-filled" href="https://www.exitgames.cz/praha-chess-key-room-doupe-neresti" title="Doupě neřesti (hra nejen pro páry)">zobrazit hru</a>
+            </div>
+        </div>
+    </div>"""
+    return BeautifulSoup(content, 'html.parser')
+
+
+@pytest.fixture
+def scraper_input_exitgamescz_home_page():
+    content = """
+    <!DOCTYPE html>
 <!-- saved from url=(0045)https://www.exitgames.cz/Seznam-unikovych-her -->
 <html dir="ltr" lang="cs"><head itemscope="" itemtype="http://schema.org/WebSite"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
@@ -975,4 +1053,6 @@ Tato úniková&nbsp;hra od EscapeX Vás dostane do snu světoznámého neurologa
             });
         }
         //-></script>
-</div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-2-button" id="ui-id-2-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom ui-styled" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-3-button" id="ui-id-3-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-4-button" id="ui-id-4-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-5-button" id="ui-id-5-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-6-button" id="ui-id-6-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-7-button" id="ui-id-7-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-8-button" id="ui-id-8-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div></body></html>
+</div><ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul><span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-2-button" id="ui-id-2-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom ui-styled" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-3-button" id="ui-id-3-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-4-button" id="ui-id-4-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-5-button" id="ui-id-5-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-6-button" id="ui-id-6-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-7-button" id="ui-id-7-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div><div class="ui-selectmenu-menu ui-front"><ul aria-hidden="true" aria-labelledby="ui-id-8-button" id="ui-id-8-menu" class="ui-menu ui-widget ui-widget-content ui-corner-bottom" role="listbox" tabindex="0"></ul></div></body></html>"""
+    return BeautifulSoup(content, 'html.parser')
+
