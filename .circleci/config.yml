@@ -28,7 +28,7 @@ jobs:
             rm -rf dist
             mkdir dist
             cp -rf lambda_env/lib/python3.6/site-packages/* dist
-            cp -r ../src/ dist/.
+            cp -r src/ dist/.
             cd dist && zip -r ../site_downloader.zip . && cd ..
 
       - run:
