@@ -1,0 +1,41 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: lambci/lambda:build-python3.6
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "src/requirements.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: create deployment package
+          command: |
+            virtualenv lambda_env -p python
+            pip install -r src/requirements.txt -t lambda_env/lib/python3.6/site-packages/
+            rm -rf dist
+            mkdir dist
+            cp -rf lambda_env/lib/python3.6/site-packages/* dist
+            cp -r ../src/ dist/.
+            cd dist && zip -r ../site_downloader.zip . && cd ..
+
+      - run:
+          name: upload deployment package to s3
+          command: aws s3 cp site_downloader.zip s3://deployment-support/site-downloader.zip
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "src/requirements.txt" }}
