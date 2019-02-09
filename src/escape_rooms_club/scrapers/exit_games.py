@@ -62,3 +62,6 @@ def parse_single_escape_room(scraper_object):
         price_info=price,
         image_url=image["src"],
     )
+
+
+# <a href="javascript:;" id="next_products" class="btn btn-border">NAČÍST DALŠÍ</a>
