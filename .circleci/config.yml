@@ -6,40 +6,30 @@ version: 2
 jobs:
   build:
     docker:
-      - image: lambci/lambda:build-python3.6
+      - image: circleci/node:8.10
 
     working_directory: ~/repo
 
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "src/requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          - v1-dependencies-
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
       - run:
-          name: create deployment package
+          name: Install Serverless CLI and dependencies
           command: |
-            virtualenv lambda_env -p python
-            pip install -r src/requirements.txt -t lambda_env/lib/python3.6/site-packages/
-            rm -rf dist
-            mkdir dist
-            cp -rf lambda_env/lib/python3.6/site-packages/* dist
-            cp -r src/escape_rooms_club/scraper_parser/* dist/.
-            cd dist && zip -r ../scraper-parser.zip . && cd ..
-
-      - run:
-          name: upload deployment package to s3
-          command: aws s3 cp scraper-parser.zip s3://deployment-support/scraper-parser.zip
-
-      - run:
-          name: update AWS Lambda code
-          command: aws lambda update-function-code --region us-east-1 --function-name exitgamescz-scraper-parser --s3-bucket deployment-support --s3-key scraper-parser.zip --publish
+            sudo npm i -g serverless
+            sls plugin install -n serverless-python-requirements
 
       - save_cache:
           paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "src/requirements.txt" }}
+            - node_modules
+          key: v1-dependencies-
+
+      - run:
+          name: package and deploy site-downloader to AWS
+          command: sls deploy            
