@@ -1,0 +1,9 @@
+service: site-downloader
+
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  site-downloader:
+    handler: handler.handler

@@ -1,0 +1,5 @@
+{
+    "site_url": "https://www.exitgames.cz/Seznam-unikovych-her", 
+    "target_bucket": "scrapers-output", 
+    "target_directory": "exitgames.cz"
+}

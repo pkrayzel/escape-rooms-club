@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 client = boto3.client('s3')
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     """
     event.site_url              - url of the site we want to download
     event.target_bucket         - name of the bucket to store data in

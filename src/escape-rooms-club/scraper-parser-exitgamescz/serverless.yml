@@ -1,0 +1,16 @@
+service: scraper-parser-exitgamescz
+
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  scraper-parser-exitgamescz:
+    handler: handler.handler
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    
+plugins:
+  - serverless-python-requirements
