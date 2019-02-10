@@ -15,10 +15,9 @@ functions:
   site-downloader:
     handler: handler.handler
     events:
-      - schedule: 
-        rate: rate(1 minute)
-        enabled: true
-        input:
-          site_url: "https://www.exitgames.cz/Seznam-unikovych-her"
-          target_bucket: "scrapers-output"
-          target_directory: "exitgames.cz"
+      - schedule:
+          rate: rate(24 hours)
+          input:
+            site_url: "https://www.exitgames.cz/Seznam-unikovych-her"
+            target_bucket: "scrapers-output"
+            target_directory: "exitgames.cz"

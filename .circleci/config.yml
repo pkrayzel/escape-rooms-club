@@ -20,10 +20,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Install Serverless CLI and dependencies
-          command: |
-            sudo npm i -g serverless
-            sls plugin install -n serverless-python-requirements
+          name: Install Serverless CLI
+          command: sudo npm i -g serverless
 
       - save_cache:
           paths:
@@ -32,4 +30,4 @@ jobs:
 
       - run:
           name: package and deploy site-downloader to AWS
-          command: sls deploy            
+          command: cd src/escape-rooms-club/site-downloader && sls deploy            
