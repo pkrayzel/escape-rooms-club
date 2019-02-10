@@ -37,7 +37,7 @@ jobs:
 
       - run:
           name: update AWS Lambda code
-          command: aws lambda update-function-code --region us-east-1 --function-name exitgamescz-scraper-parser --s3-bucket deployment-support --s3-key scraper-parser.zip --publish
+          command: aws lambda update-function-code --region eu-west-1 --function-name exitgamescz-scraper-parser --s3-bucket deployment-support --s3-key scraper-parser.zip --publish
 
       - save_cache:
           paths:
