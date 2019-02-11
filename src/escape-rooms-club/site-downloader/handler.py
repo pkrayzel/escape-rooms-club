@@ -1,13 +1,17 @@
 import json
 import logging
-from botocore.vendored import requests
-import boto3
 from datetime import datetime
+
+from dao import WebClient, StorageClient
+from domain import SiteDownloader
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-client = boto3.client('s3')
+
+web_client = WebClient()
+storage_client = StorageClient()
+site_downloader = SiteDownloader(web_client, storage_client)
 
 
 def handler(event, context):
@@ -21,23 +25,16 @@ def handler(event, context):
     """
     logger.info(f'AWS Lambda - site downloader got event: {event}')
 
-    logger.info(f'calling site url: {event["site_url"]}')
-    response = requests.get(event["site_url"])
+    success, error_message = site_downloader.download_site_and_store_its_content(
+        site_url=event["site_url"],
+        bucket_name=event["target_bucket"],
+        target_directory=event["target_directory"]
+    )
 
-    try:
-        response.raise_for_status()
-
-        date_string = datetime.now().strftime('%Y/%m/%d/%H/%M')
-        s3_key = f'{event["target_directory"]}/{date_string}/site.html'
-
-        logger.info(f'Uploading file content to the bucket: {event["target_bucket"]} to the path: {s3_key}')
-        client.put_object(Body=response.content, Bucket=event["target_bucket"], Key=s3_key)
-
-    except Exception as e:
-        logger.error(f'Something went wrong: {e}')
+    if not success:
         return {
             'statusCode': 500,
-            'error': e
+            'error': error_message
         }
 
     return {
