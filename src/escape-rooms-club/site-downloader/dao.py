@@ -20,10 +20,9 @@ class StorageClient:
 
     def upload(self, bucket_name, file_key, file_content):
         logger.info(f'Uploading file content to the bucket: {bucket_name} to the path: {file_key}')
-        response = self.client.put_object(
+        self.client.put_object(
             Body=file_content,
             Bucket=bucket_name,
             Key=file_key
         )
-        response.raise_for_status()
 

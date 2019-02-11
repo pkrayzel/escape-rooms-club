@@ -32,6 +32,6 @@ class SiteDownloader:
 
         except Exception as e:
             logger.error(f'Something went wrong: {e}')
-            return False, e
+            return False, str(e)
 
         return True, None
