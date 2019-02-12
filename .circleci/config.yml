@@ -28,8 +28,11 @@ jobs:
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
       - run:
-            name: install aws command line tool
-            command: pip install awscli            
+            name: install requirements
+            command: |
+              pip install awscli
+              pip install pytest
+              pip install requests==2.21.0
             
       - run:
           name: Build and run docker images
