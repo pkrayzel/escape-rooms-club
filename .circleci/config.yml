@@ -55,6 +55,11 @@ jobs:
     docker:
       - image: circleci/node:8.10
 
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
       - run:
           name: Install Serverless CLI
           command: sudo npm i -g serverless
