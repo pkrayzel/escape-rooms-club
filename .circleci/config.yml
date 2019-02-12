@@ -24,7 +24,7 @@ jobs:
       - run:
           name: install curl
           command: |
-            RUN apk --update upgrade && apk add curl
+            apk --update upgrade && apk add curl
 
       # unit
       - run:
