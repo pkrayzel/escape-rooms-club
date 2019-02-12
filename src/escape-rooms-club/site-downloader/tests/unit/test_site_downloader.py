@@ -9,24 +9,36 @@ from domain import SiteDownloader
 
 def test_site_downloader_success():
     site_url = "https://www.test-website.com"
-    file_content = "This is test website content which should be download"
+    bucket_name = "bucket_name"
+    target_directory = "test-website.com"
+
+    expected_file_content = "This is test website content which should be download"
     
     web_client = fakes.FakeWebClient({
-        site_url: file_content
+        site_url: expected_file_content
     })
+    
     storage_client = fakes.FakeStorageClient()
-
+    
     site_downloader = SiteDownloader(web_client, storage_client)
-    success, error_message = site_downloader.download_site_and_store_its_content(site_url, "bucket_name", "test-website.com")
+    success, error_message = site_downloader.download_site_and_store_its_content(
+        site_url=site_url, 
+        bucket_name=bucket_name,
+        target_directory=target_directory
+    )
 
     assert success is True, "Operation should have succeeded"
     assert not error_message, "Error message should be none"
 
-    files_for_bucket = storage_client.files["bucket_name"]
-    assert files_for_bucket
+    [file_key] = storage_client.find_all_file_keys_in_directory(
+        bucket_name=bucket_name, 
+        directory=target_directory
+    )
+    file_content = storage_client.get(
+        bucket_name=bucket_name, 
+        file_key=file_key)
     
-    file_key = files_for_bucket[file_content]
-    assert file_key.startswith("test-website.com/")
+    assert expected_file_content == file_content
 
 
 def test_site_downloader_web_client_failure():
