@@ -13,6 +13,13 @@ jobs:
     steps:
       - checkout
 
+      - run:
+            name: install requirements
+            command: |
+              pip install awscli
+              pip install pytest
+              pip install requests==2.21.0
+           
       # unit
       - run:
           name: Run unit tests
@@ -26,14 +33,7 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-
-      - run:
-            name: install requirements
-            command: |
-              pip install awscli
-              pip install pytest
-              pip install requests==2.21.0
-            
+ 
       - run:
           name: Build and run docker images
           command: |
