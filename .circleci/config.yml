@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  tests:
+  build:
     docker:
       - image: library/python:3.7-alpine3.8
 
