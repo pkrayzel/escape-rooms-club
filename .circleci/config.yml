@@ -4,29 +4,60 @@
 #
 version: 2
 jobs:
-  build:
+  tests:
     docker:
-      - image: circleci/node:8.10
+      - image: library/python:3.7-alpine3.8
 
     working_directory: ~/repo
 
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-          - v1-dependencies-
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # unit
+      - run:
+          name: Run unit tests
+          command: pytest -vvvv src/escape-rooms-club/site-downloader/tests/unit/
+
+      # integration tests      
+      - setup_remote_docker
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
+      - run:
+            name: install aws command line tool
+            command: pip install awscli            
+            
+      - run:
+          name: Build and run docker images
+          command: |
+            docker-compose build
+            docker-compose up -d
+
+      - run:
+          name: Create s3 bucket for integration test run
+          command: |
+            aws --endpoint-url http://localhost:4572 s3 mb s3://scrapers-output
+
+      - run:
+          name: Run integration tests
+          command: pytest -vvvv src/escape-rooms-club/site-downloader/tests/integration/
+
+      - run:
+          name: Clean docker-compose
+          command: |
+            docker-compose down
+
+  deploy:        
+    docker:
+      - image: circleci/node:8.10
 
       - run:
           name: Install Serverless CLI
           command: sudo npm i -g serverless
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-
 
       - run:
           name: package and deploy site-downloader to AWS
