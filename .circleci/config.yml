@@ -5,38 +5,37 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/python:3.7
-
+    machine: true # Use a Linux VM instead of docker environment
+    # docker:
+    # - image: circleci/python:3.7
     working_directory: ~/repo
 
     steps:
       - checkout
       
       # install prerequisities
-      - run:
-          name: install requirements
-          command: |
-            sudo pip install -r src/escape-rooms-club/site-downloader/tests/requirements.txt
+      # - run:
+          # name: install requirements
+          # command: |
+            # sudo pip install -r src/escape-rooms-club/site-downloader/tests/requirements.txt
 
       # unit
-      - run:
-          name: Run unit tests
-          command: pytest -vvvv src/escape-rooms-club/site-downloader/tests/unit/
+      # - run:
+          # name: Run unit tests
+          # command: pytest -vvvv src/escape-rooms-club/site-downloader/tests/unit/
 
       # integration tests      
-      - setup_remote_docker
       - run:
           name: Build and run docker images
           command: |
             # build the application image
             cd src/escape-rooms-club/docker
-            docker build -t website -f website/Dockerfile . 
-            docker run -p 5000:5000 -d website
-            docker build -t localstack -f localstack/Dockerfile .
-            docker run -p 4572:4572 -d localstack
-            # sudo docker-compose build
-            # sudo docker-compose up -d
+            # docker build -t website -f website/Dockerfile . 
+            # docker run -p 5000:5000 -d website
+            # docker build -t localstack -f localstack/Dockerfile .
+            # docker run -p 4572:4572 -d localstack
+            docker-compose build
+            docker-compose up -d
 
       - run:
           name: Create s3 bucket for integration test run
