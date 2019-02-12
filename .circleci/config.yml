@@ -17,9 +17,7 @@ jobs:
       - run:
           name: install requirements
           command: |
-            sudo pip install awscli
-            pip install pytest
-            pip install requests==2.21.0
+            sudo pip install -r src/escape-rooms-club/site-downloader/tests/requirements.txt
 
       # unit
       - run:
