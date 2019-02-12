@@ -28,8 +28,8 @@ jobs:
       - run:
           name: Build and run docker images
           command: |
-            cd src/escape-rooms-club/docker && docker-compose build
-            cd src/escape-rooms-club/docker && docker-compose up -d
+            cd src/escape-rooms-club/docker && sudo docker-compose build
+            cd src/escape-rooms-club/docker && sudo docker-compose up -d
 
       - run:
           name: Create s3 bucket for integration test run
@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Clean docker-compose
           command: |
-            cd src/escape-rooms-club/docker && docker-compose down
+            cd src/escape-rooms-club/docker && sudo docker-compose down
 
   deploy:        
     docker:
