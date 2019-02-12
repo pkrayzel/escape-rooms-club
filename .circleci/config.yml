@@ -25,6 +25,7 @@ jobs:
           command: pytest -vvvv src/escape-rooms-club/site-downloader/tests/unit/
 
       # integration tests      
+      - setup_remote_docker
       - run:
           name: Build and run docker images
           command: |
