@@ -17,7 +17,7 @@ jobs:
       - run:
           name: install requirements
           command: |
-            pip install awscli
+            sudo pip install awscli
             pip install pytest
             pip install requests==2.21.0
 
