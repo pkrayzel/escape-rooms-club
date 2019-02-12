@@ -30,9 +30,10 @@ jobs:
           name: Build and run docker images
           command: |
             # build the application image
-            cd src/escape-rooms-club/docker && docker build -t website -f website/Dockerfile .
-            cd src/escape-rooms-club/docker/ && sudo docker-compose build
-            cd src/escape-rooms-club/docker/ && sudo docker-compose up -d
+            cd src/escape-rooms-club/docker && docker build -t website -f website/Dockerfile . && docker run -p 5000:5000 -d website
+            cd src/escape-rooms-club/docker && docker build -t localstack -f localstack/Dockerfile . && docker run -p 4572:4572 -d localstack
+            # sudo docker-compose build
+            # sudo docker-compose up -d
 
       - run:
           name: Create s3 bucket for integration test run
