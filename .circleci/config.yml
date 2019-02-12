@@ -12,14 +12,20 @@ jobs:
 
     steps:
       - checkout
+      
+      # install prerequisities
+      - run:
+          name: install requirements
+          command: |
+            pip install awscli
+            pip install pytest
+            pip install requests==2.21.0
 
       - run:
-            name: install requirements
-            command: |
-              pip install awscli
-              pip install pytest
-              pip install requests==2.21.0
-           
+          name: install curl
+          command: |
+            RUN apk --update upgrade && apk add curl
+
       # unit
       - run:
           name: Run unit tests
