@@ -34,6 +34,7 @@ jobs:
           name: Install Serverless CLI
           command: |
             sudo npm i -g serverless
+            npm install
             sudo npm install serverless-python-requirements
       - setup_remote_docker 
       - run:
