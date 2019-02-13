@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  build_and_test:
     machine: true # Use a Linux VM instead of docker environment
     working_directory: ~/repo
     steps:
@@ -27,7 +27,7 @@ jobs:
           name: Clean docker-compose
           command: docker-compose down
 
-  deploy:        
+  deploy_dev:        
     docker:
       - image: circleci/node:8.10
 
@@ -43,3 +43,12 @@ jobs:
       - run:
           name: package and deploy site-downloader to AWS
           command: cd src/escape-rooms-club/site-downloader && sls deploy            
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build_and_test
+      - deploy_dev:
+          requires:
+            - build_and_test
