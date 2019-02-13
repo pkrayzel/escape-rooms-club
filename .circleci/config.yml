@@ -24,6 +24,7 @@ jobs:
           name: Clean docker-compose
           command: docker-compose down
   deploy_and_staging:
+    machine: false
     docker:
       - image: circleci/node:8.10
     working_directory: ~/repo
@@ -34,6 +35,7 @@ jobs:
           command: |
             sudo npm i -g serverless
             sudo npm install serverless-python-requirements
+      - setup_remote_docker 
       - run:
           name: package and deploy site-downloader to AWS
           command: cd src/escape-rooms-club/site-downloader && sls deploy
