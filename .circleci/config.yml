@@ -33,13 +33,14 @@ jobs:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-      - setup_remote_docker 
+            sudo npm install
+      # - setup_remote_docker 
       - run:
           name: package and deploy site-downloader to dev stage
           command: |
             cd src/escape-rooms-club/site-downloader
             sudo sls plugin install -n serverless-python-requirements
-            sls deploy
+            sls deploy -v
       - run:
           name: test lambda invocation in dev stage
           command: |
