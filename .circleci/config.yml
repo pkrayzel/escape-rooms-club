@@ -31,7 +31,9 @@ jobs:
       - checkout
       - run:
           name: Install Serverless CLI
-          command: sudo npm i -g serverless
+          command: |
+            sudo npm i -g serverless
+            sudo npm install serverless-python-requirements
       - run:
           name: package and deploy site-downloader to AWS
           command: cd src/escape-rooms-club/site-downloader && sls deploy
