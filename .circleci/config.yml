@@ -14,36 +14,27 @@ jobs:
           command: |
             docker-compose build
             docker-compose up -d website
-
       - run:
           name: Run unit tests
           command: docker-compose run test-runner /opt/utils/tests_unit.sh
-
       - run:
           name: Run integration tests
           command: docker-compose run test-runner /opt/utils/tests_integration.sh
-
       - run:
           name: Clean docker-compose
           command: docker-compose down
-
-  deploy_dev:        
+  deploy_dev:
     docker:
       - image: circleci/node:8.10
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       - run:
           name: Install Serverless CLI
           command: sudo npm i -g serverless
-
       - run:
           name: package and deploy site-downloader to AWS
-          command: cd src/escape-rooms-club/site-downloader && sls deploy            
-
+          command: cd src/escape-rooms-club/site-downloader && sls deploy
 workflows:
   version: 2
   build-test-and-deploy:
