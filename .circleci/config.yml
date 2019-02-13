@@ -37,16 +37,25 @@ jobs:
             sudo npm install serverless-python-requirements
       - setup_remote_docker 
       - run:
-          name: package and deploy site-downloader to AWS
-          command: cd src/escape-rooms-club/site-downloader && sls deploy
+          name: package and deploy site-downloader to dev stage
+          command: |
+            cd src/escape-rooms-club/site-downloader
+            sls deploy
       - run:
           name: test lambda invocation in dev stage
           command: |
-            sls invoke -f site-downloader --path local/event.json
-            sls invoke -f site-downloader --path local/invalid_event.json
+            sls invoke -f site-downloader --path local/dev_stage_valid_event.json
+            sls invoke -f site-downloader --path local/dev_stage_invalid_event.json
       - run:
-          name: package and deploy site-downloader to AWS
-          command: cd src/escape-rooms-club/site-downloader && sls deploy --stage prod
+          name: package and deploy site-downloader to prod stage
+          command: |
+            sls deploy --stage prod
+      - run:
+          name: test lambda invocation in prod stage
+          command: |
+            sls invoke -f site-downloader --stage prod --path local/prod_stage_valid_event.json
+            sls invoke -f site-downloader --stage prod --path local/prod_stage_invalid_event.json
+
 workflows:
   version: 2
   build-test-and-deploy:
