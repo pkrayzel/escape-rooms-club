@@ -24,14 +24,20 @@ jobs:
     #       name: Clean docker-compose
     #       command: docker-compose down
   deploy_and_staging:
-    # machine: false
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/python:3.7
+
     working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: Install Serverless CLI
+          name: Install node and npm
+          command: |
+            curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            node --version && npm -v
+      - run:
+          name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
             npm install
