@@ -10,7 +10,7 @@ def test_site_downloader_success():
     storage_client = StorageClient(endpoint_url="http://localstack:4572")
     site_downloader = SiteDownloader(WebClient(), storage_client)
 
-    bucket_name = "scrapers-output"
+    bucket_name = "dev-scrapers-output"
     target_directory = "exitgames.cz"
     success, error_message = site_downloader.download_site_and_store_its_content(
         site_url="http://website:5000/exitgames.cz", 
@@ -38,7 +38,7 @@ def test_site_downloader_web_client_failure():
     site_downloader = SiteDownloader(WebClient(), storage_client)
 
     site_url = "http://website:5000/not-existing-site.cz"
-    bucket_name = "scrapers-output"
+    bucket_name = "dev-scrapers-output"
     target_directory = "not-existing-site.cz"
 
     success, error_message = site_downloader.download_site_and_store_its_content(

@@ -9,7 +9,7 @@ provider:
        - s3:PutObject
        - s3:Get*
        - s3:List*
-      Resource: "arn:aws:s3:::scrapers-output/*"
+      Resource: "arn:aws:s3:::prod-scrapers-sites-content/*"
 
 functions:
   site-downloader:
@@ -19,5 +19,12 @@ functions:
           rate: rate(24 hours)
           input:
             site_url: "https://www.exitgames.cz/Seznam-unikovych-her"
-            target_bucket: "scrapers-output"
+            target_bucket: "prod-scrapers-sites-content"
             target_directory: "exitgames.cz"
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    
+plugins:
+  - serverless-python-requirements
