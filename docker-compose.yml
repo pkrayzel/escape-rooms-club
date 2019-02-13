@@ -1,0 +1,25 @@
+version: '2.1'
+services:
+  website:
+    build:
+      context: .
+      dockerfile: ./docker/website/Dockerfile
+    depends_on:
+      localstack:
+        condition: service_healthy
+    ports:
+      - 5000:5000
+  
+  localstack:
+    build:
+      context: .
+      dockerfile: ./docker/localstack/Dockerfile
+    environment:
+      - SERVICES=s3,sqs
+    ports:
+      - 4572:4572
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: ./docker/test-runner/Dockerfile
