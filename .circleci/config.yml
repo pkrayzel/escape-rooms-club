@@ -25,23 +25,15 @@ jobs:
     #       command: docker-compose down
   deploy_and_staging:
     docker:
-      - image: circleci/python:3.7
-
+      - image: circleci/node:8.10
     working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: Install node and npm
-          command: |
-            curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            node --version && npm -v
-      - run:
           name: Install Serverless CLI and dependencies
           command: |
             sudo npm i -g serverless
-            npm install
-            sudo npm install serverless-python-requirements
+            sls plugin install -n serverless-python-requirements
       - setup_remote_docker 
       - run:
           name: package and deploy site-downloader to dev stage
